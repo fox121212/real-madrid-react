@@ -48,7 +48,7 @@ export default function Home() {
 {/* === REAL MADRID LOGO (Static - Right Side) === */}
 <div className="hero-logo">
   <img 
-    src="/src/assets/real-madrid-logo.png" 
+    src="real-madrid-logo.png" 
     alt="Real Madrid Crest" 
   />
 </div>
