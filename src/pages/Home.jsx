@@ -1,153 +1,156 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import SectionHeader from '../components/SectionHeader';
-import PlayerCard from '../components/PlayerCard';
-import PlayerModal from '../components/PlayerModal';
-import { players } from '../data/players';
+import { Link } from 'react-router-dom'
+import FadeIn from '../components/FadeIn'
 
 const trophies = [
-  { num: 15, name: 'Champions League', latest: '2023–24' },
-  { num: 36, name: 'La Liga Titles', latest: '2023–24' },
-  { num: 20, name: 'Copa del Rey', latest: '2022–23' },
-  { num: '100+', name: 'Total Trophies', latest: 'All time' },
-];
+  { num: 15, name: 'UEFA Champions League', latest: 'Latest: 2023–24', years: '1956 · 1957 · 1958 · 1959 · 1960 · 1966 · 1998 · 2000 · 2002 · 2014 · 2016 · 2017 · 2018 · 2022 · 2024' },
+  { num: 36, name: 'La Liga', latest: 'Latest: 2023–24', years: '1932–2024 (36 titles)' },
+  { num: 20, name: 'Copa del Rey', latest: 'Latest: 2022–23', years: '1905 – 2023 (20 titles)' },
+  { num: 8, name: 'FIFA Club World Cup', latest: 'Latest: 2022', years: '1960 · 1998 · 2002 · 2014 · 2016 · 2017 · 2018 · 2022' },
+  { num: 6, name: 'UEFA Super Cup', latest: 'Latest: 2024', years: '2002 · 2014 · 2016 · 2017 · 2022 · 2024' },
+  { num: 13, name: 'Spanish Super Cup', latest: 'Latest: 2024', years: '1988–2024 (13 titles)' },
+]
 
-const featured = players.filter(p => [20, 19, 12, 14, 21].includes(p.id));
+const featured = [
+  { number: 10, name: 'Kylian Mbappé', pos: 'Forward', flag: '🇫🇷', img: '/images/players/kylianmbappe.jpg' },
+  { number: 7, name: 'Vinícius Jr.', pos: 'Forward', flag: '🇧🇷', img: '/images/players/viniciusjr.jpg' },
+  { number: 5, name: 'Jude Bellingham', pos: 'Midfielder', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', img: '/images/players/judebellingham.jpg' },
+  { number: 8, name: 'Fede Valverde', pos: 'Midfielder', flag: '🇺🇾', img: '/images/players/fedevalverde.jpg' },
+  { number: 11, name: 'Rodrygo', pos: 'Forward', flag: '🇧🇷', img: '/images/players/rodrygo.jpg' },
+  { number: 12, name: 'Trent Alexander-Arnold', pos: 'Defender', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', img: '/images/players/trentalexanderarnold.jpg' },
+]
 
 export default function Home() {
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
-
   return (
-    <div>
+    <main>
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5"
-          style={{ backgroundImage: 'linear-gradient(rgba(200,169,81,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,81,0.3) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        {/* Radial glow */}
-        <div className="absolute inset-0 bg-gradient-radial from-gold/5 via-transparent to-transparent" style={{ background: 'radial-gradient(ellipse at center, rgba(200,169,81,0.08) 0%, transparent 70%)' }} />
+      {/* HERO */}
+<section className="hero">
+  <div className="hero-grid" />
 
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="inline-block font-oswald text-xs tracking-[5px] uppercase text-gold/80 border border-gold/20 px-4 py-2 mb-8">
-            Founded 1902 · Madrid, Spain
-          </motion.div>
+  <div className="hero-content">
+    <div className="hero-badge">Founded 1902 · Madrid, Spain</div>
+    <h1>REAL<br /><span className="gold">MADRID</span></h1>
+    <p className="hero-subtitle">Hala Madrid · The Most Successful Club in History</p>
 
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="font-bebas text-[100px] md:text-[160px] leading-none tracking-wide text-white">
-            REAL<br/><span className="text-gold">MADRID</span>
-          </motion.h1>
-
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-            className="font-oswald text-lg tracking-widest uppercase text-white/40 mb-12">
-            Hala Madrid · The Most Successful Club in History
-          </motion.p>
-
-          {/* Stats */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gold/10 mb-12 max-w-3xl mx-auto">
-            {trophies.map(t => (
-              <div key={t.name} className="bg-black py-6 px-4">
-                <div className="font-bebas text-5xl text-gold">{t.num}</div>
-                <div className="font-oswald text-xs tracking-widest uppercase text-white/50 mt-1">{t.name}</div>
-              </div>
-            ))}
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
-            className="flex flex-wrap gap-4 justify-center">
-            <Link to="/squad" className="font-oswald text-sm tracking-widest uppercase bg-gold text-black px-8 py-3 hover:bg-gold-light transition-colors duration-200">
-              View the Squad
-            </Link>
-            <Link to="/matches" className="font-oswald text-sm tracking-widest uppercase border border-gold text-gold px-8 py-3 hover:bg-gold hover:text-black transition-all duration-200">
-              Live Matches
-            </Link>
-          </motion.div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <span className="font-oswald text-xs tracking-widest uppercase text-white/30">Scroll</span>
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-px h-8 bg-gradient-to-b from-gold/60 to-transparent" />
-        </div>
-      </section>
-
-      {/* ABOUT STRIP */}
-      <section className="bg-[#111] border-y border-gold/10 py-20 px-6">
-        <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <SectionHeader label="About the Club" title="A CENTURY OF" goldPart="GREATNESS" />
-            <p className="text-rmgray-lighter leading-relaxed mb-4 text-sm">
-              Real Madrid Club de Fútbol — founded on March 6, 1902 — is the most decorated football club in history.
-              Based in the Spanish capital, Los Blancos have built an unrivalled legacy of domestic and European dominance.
-            </p>
-            <p className="text-rmgray-lighter leading-relaxed mb-6 text-sm">
-              Chosen by FIFA as the <strong className="text-gold">Best Club of the 20th Century</strong>, Real Madrid holds records for Champions League titles (15) and La Liga titles (36). Under Xabi Alonso from 2025–26, a new era begins.
-            </p>
-            <Link to="/club" className="font-oswald text-sm tracking-widest uppercase border border-gold text-gold px-6 py-2.5 hover:bg-gold hover:text-black transition-all duration-200 inline-block">
-              Read More
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-px bg-gold/10">
-            {[['36','La Liga Titles'],['15','Champions League'],['20','Copa del Rey'],['100+','Total Honours']].map(([n,l])=>(
-              <div key={l} className="bg-[#0f0f0f] p-8 text-center">
-                <div className="font-bebas text-6xl text-gold">{n}</div>
-                <div className="font-oswald text-xs tracking-widest uppercase text-white/40 mt-2">{l}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED SQUAD */}
-      <section className="bg-[#0f0f0f] py-20 px-6">
-        <div className="max-w-screen-xl mx-auto">
-          <SectionHeader label="2025–26 Season" title="THE" goldPart="SQUAD" />
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-gold/5">
-            {featured.map(p => (
-              <PlayerCard key={p.id} player={p} onClick={setSelectedPlayer} />
-            ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Link to="/squad" className="font-oswald text-sm tracking-widest uppercase bg-gold text-black px-8 py-3 hover:bg-gold-light transition-colors duration-200 inline-block">
-              Full Squad →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* STADIUM TEASER */}
-      <section className="bg-[#111] border-t border-gold/10 py-20 px-6">
-        <div className="max-w-screen-xl mx-auto">
-          <SectionHeader label="Home Ground" title="SANTIAGO" goldPart="BERNABÉU" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gold/10 mb-10">
-            {[['81,044','Capacity'],['1947','Opened'],['4×','UCL Finals Hosted'],['€1B+','Renovation Cost']].map(([v,k])=>(
-              <div key={k} className="bg-[#0f0f0f] py-8 px-6 text-center">
-                <div className="font-bebas text-4xl text-gold">{v}</div>
-                <div className="font-oswald text-xs tracking-widest uppercase text-white/40 mt-2">{k}</div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center">
-            <Link to="/stadium" className="font-oswald text-sm tracking-widest uppercase border border-gold text-gold px-8 py-3 hover:bg-gold hover:text-black transition-all duration-200 inline-block">
-              Explore the Stadium
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* News Teaser */}
-      <section className="bg-[#0a0a0a] border-t border-gold/10 py-20 px-6 text-center">
-        <SectionHeader label="Latest" title="CLUB" goldPart="NEWS" />
-        <p className="text-rmgray text-sm mb-6">Stay up to date with Real Madrid news — transfers, injuries, press conferences and more.</p>
-        <Link to="/news" className="font-oswald text-sm tracking-widest uppercase bg-gold text-black px-8 py-3 hover:bg-gold-light transition-colors duration-200 inline-block">
-          Read Latest News →
-        </Link>
-      </section>
-
-      <PlayerModal player={selectedPlayer} onClose={() => setSelectedPlayer(null)} />
+    <div className="hero-stats">
+      <div><div className="hero-stat-num">15</div><div className="hero-stat-label">Champions League</div></div>
+      <div><div className="hero-stat-num">36</div><div className="hero-stat-label">La Liga Titles</div></div>
+      <div><div className="hero-stat-num">20</div><div className="hero-stat-label">Copa del Rey</div></div>
+      <div><div className="hero-stat-num">100+</div><div className="hero-stat-label">Total Trophies</div></div>
     </div>
-  );
+
+    <div className="hero-cta">
+      <Link to="/squad" className="btn-primary">View the Squad</Link>
+      <Link to="/achievements" className="btn-outline">Our Achievements</Link>
+    </div>
+  </div>
+
+{/* === REAL MADRID LOGO (Static - Right Side) === */}
+<div className="hero-logo">
+  <img 
+    src="/src/assets/real-madrid-logo.png" 
+    alt="Real Madrid Crest" 
+  />
+</div>
+</section>
+
+      {/* ABOUT */}
+      <section className="section" style={{ background: 'var(--dark-2)', borderTop: '1px solid rgba(200,169,81,0.08)' }}>
+        <FadeIn>
+          <div className="section-header">
+            <div className="section-label">About the Club</div>
+            <h2 className="section-title">A CENTURY OF <span className="text-gold">GREATNESS</span></h2>
+            <div className="section-divider" />
+          </div>
+          <p style={{ color: 'var(--gray-light)', fontSize: 15, lineHeight: 1.9, maxWidth: 800, marginBottom: 16 }}>
+            Real Madrid Club de Fútbol — founded on March 6, 1902 — is the most decorated football club in history. Chosen by FIFA as the <strong style={{ color: 'var(--gold)' }}>Best Club of the 20th Century</strong>, Real Madrid holds the record for the most UEFA Champions League titles (15) and the most La Liga titles (36).
+          </p>
+          <p style={{ color: 'var(--gray-light)', fontSize: 15, lineHeight: 1.9, maxWidth: 800, marginBottom: 24 }}>
+            In 2024 alone, the club lifted five trophies — matching a feat achieved only once before in their 122-year history. Under Xabi Alonso beginning 2025–26, a new era begins at the Bernabéu.
+          </p>
+          <Link to="/club" className="btn-outline">Read More</Link>
+        </FadeIn>
+      </section>
+
+      {/* TROPHIES */}
+      <section className="section" style={{ background: 'var(--dark-3)' }}>
+        <FadeIn>
+          <div className="section-header">
+            <div className="section-label">Honours</div>
+            <h2 className="section-title">TROPHY <span className="text-gold">CABINET</span></h2>
+            <div className="section-divider" />
+          </div>
+        </FadeIn>
+        <div className="trophies-grid">
+          {trophies.map((t, i) => (
+            <FadeIn key={i}>
+              <div className="trophy-card">
+                <div className="trophy-number">{t.num}</div>
+                <div className="trophy-name">{t.name}</div>
+                <div className="trophy-latest">{t.latest}</div>
+                <div className="trophy-years">{t.years}</div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 40 }}>
+          <Link to="/achievements" className="btn-outline">Full Trophy List</Link>
+        </div>
+      </section>
+
+      {/* SQUAD TEASER */}
+      <section className="section" style={{ background: 'var(--dark-2)', borderTop: '1px solid rgba(200,169,81,0.08)' }}>
+        <FadeIn>
+          <div className="section-header">
+            <div className="section-label">2025–26 Season</div>
+            <h2 className="section-title">THE <span className="text-gold">SQUAD</span></h2>
+            <div className="section-divider" />
+          </div>
+        </FadeIn>
+        <div className="players-grid">
+          {featured.map((p, i) => (
+            <FadeIn key={i}>
+              <Link to="/squad" style={{ textDecoration: 'none' }}>
+                <div className="player-card">
+                  <div className="player-photo">
+                    <div className="player-number-bg">{p.number}</div>
+                    <img src={p.img} alt={p.name} />
+                    <div className="player-flag">{p.flag}</div>
+                    <div className="player-info">
+                      <div className="player-jersey">#{p.number}</div>
+                      <div className="player-name">{p.name}</div>
+                      <div className="player-pos">{p.pos}</div>
+                    </div>
+                    <div className="player-overlay"><span>View Player</span></div>
+                  </div>
+                </div>
+              </Link>
+            </FadeIn>
+          ))}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 20 }}>
+          <Link to="/squad" className="btn-primary">Full Squad</Link>
+        </div>
+      </section>
+
+      {/* STADIUM */}
+      <section className="section" style={{ background: 'var(--dark-3)', borderTop: '1px solid rgba(200,169,81,0.08)' }}>
+        <FadeIn>
+          <div className="section-header">
+            <div className="section-label">Home Ground</div>
+            <h2 className="section-title">SANTIAGO <span className="text-gold">BERNABÉU</span></h2>
+            <div className="section-divider" />
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 2, marginBottom: 40 }}>
+            {[['81,044','Capacity'],['1947','Opened'],['4×','UCL Finals Hosted'],['€1B+','2023 Renovation']].map(([v,k],i) => (
+              <div key={i} className="stadium-stat"><div className="stadium-stat-val">{v}</div><div className="stadium-stat-key">{k}</div></div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/stadium" className="btn-outline">Explore the Stadium</Link>
+          </div>
+        </FadeIn>
+      </section>
+    </main>
+  )
 }
