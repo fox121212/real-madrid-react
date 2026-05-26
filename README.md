@@ -292,6 +292,11 @@ npm run deploy
 ---
 
 ## 📸 Screenshots
+<img width="1902" height="1077" alt="image" src="https://github.com/user-attachments/assets/5f41c8db-a271-42c6-a9fd-331a87d976b0" />
+<img width="1899" height="1076" alt="image" src="https://github.com/user-attachments/assets/c03a338c-c49d-4b7d-be8f-fb6e23928b9c" />
+<img width="1898" height="1074" alt="image" src="https://github.com/user-attachments/assets/bb873c63-d378-4717-a1f8-cca79b3d6712" />
+
+
 
 ### **Home Page**
 - Full-width hero with Real Madrid logo
