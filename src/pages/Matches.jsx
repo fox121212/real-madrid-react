@@ -13,7 +13,7 @@ export default function Matches() {
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const res = await fetch(`/api-football/v4/teams/${REAL_MADRID_ID}/matches?limit=30`);
+        const res = await fetch(`/api/matches`);
         const data = await res.json();
 
         if (!res.ok || !data.matches) {
